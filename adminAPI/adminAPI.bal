@@ -21,7 +21,6 @@ service / on new http:Listener(9090) {
     private final mysql:Client db;
 
     function init() returns error? {
-        // self.db = check new ("sahackathon.mysql.database.azure.com", "choreo", "wso2!234", "chathurac_db", 3306);
         self.db = check new (host, user, password, database, 3306);
     }
 
