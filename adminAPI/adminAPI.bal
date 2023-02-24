@@ -16,6 +16,16 @@ configurable string user = ?;
 configurable string password = ?;
 configurable string database = ?;
 
+// set CORS headers
+@http:ServiceConfig {
+    cors: {
+        allowOrigins: ["*"],
+        allowCredentials: false,
+        allowHeaders: ["Authorization"],
+        exposeHeaders: ["*"],
+        maxAge: 84900
+    }
+}
 service / on new http:Listener(9090) {
 
     private final mysql:Client db;
@@ -42,6 +52,7 @@ service / on new http:Listener(9090) {
         return product;
     }
 
+    
     resource function get products() returns Product[]|error? {
         // retrieve all the products from the database and return them
         stream<Product, sql:Error?> resultStream = self.db->query(`SELECT * FROM ce_products`);
